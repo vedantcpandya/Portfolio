@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vedant Pandya | Portfolio</title>
+    <!-- Add this in the <head> section -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Menu Button */
+        .menu-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .menu-button div {
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+
+        /* Popup Menu */
+        .popup-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            z-index: 9;
+            transition: opacity 0.5s ease, visibility 0s 0.5s;
+        }
+
+        .menu-open .popup-menu {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease;
+        }
+
+        .popup-menu ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        .popup-menu ul li {
+            margin: 15px 0;
+        }
+
+        .popup-menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        /* Blur background when menu is open */
+        .blur-background {
+            transition: filter 0.5s ease;
+        }
+
+        .menu-open .blur-background {
+            filter: blur(10px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            background-image: url('vedantphoto.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Hero Text with original effects */
+        .hero-text {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            text-align: left;
+            color: transparent;
+            -webkit-text-stroke: 2px white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            font-family: 'Poppins', sans-serif;
+            transition: text-shadow 0.5s ease;
+        }
+
+        .hero-text h1 { font-size: 3rem; margin: 0; }
+        .hero-text h2 { font-size: 5rem; margin: 0; }
+
+        /* About Me Section */
+        .content-section {
+            background-color: #f0e5d6;
+            color: #333;
+            padding: 60px 20px;
+            padding-top: 5rem;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .content-section.fade-in {
+            opacity: 1;
+        }
+
+        .content-section h2 {
+            color: #222;
+        }
+
+        .content-section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 40px;
+            background-color: #ece6d7; /* Soft beige background */
+            color: #333;
+            text-align: left;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+        }
+
+        .skills-section h2 {
+            margin-bottom: 30px;
+            color: #222;
+            width: 100%;
+        }
+
+        .skill {
+            margin-bottom: 20px;
+            text-align: left;
+            max-width: 300px;
+        }
+
+        .skill-wrapper {
+            display: flex;
+            gap: 20px;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill span {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Rating Dots */
+        .rating {
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .skill:hover .rating {
+            opacity: 1;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin: 3px;
+            border: 2px solid #8b5e3c; /* Brown border for empty dots */
+            background-color: transparent; /* Empty dots */
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.filled {
+            background-color: #8b5e3c; /* Dark brown for filled dots */
+            border: none;
+        }
+	/* Contact Section Styling */
+.contact-section {
+    padding: 40px 20px;
+    background-color: #ece6d7;
+    text-align: center;
+}
+
+.contact-section h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.contact-section p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.contact-section a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1.5rem; /* Adjust font size */
+}
+
+.contact-section a:hover {
+    text-decoration: underline;
+}
+
+.social-links {
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: #333;
+    margin: 0 10px;
+    display: inline-flex;
+    align-items: center; /* Align icon with text */
+}
+
+.social-links i {
+    margin-right: 8px; /* Space between icon and text */
+    font-size: 1.5rem; /* Adjust icon size to match the text */
+}
+
+.social-links a:hover {
+    color: #0073b1; /* Change color on hover for LinkedIn */
+}
+
+
+
+    </style>
+</head>
+
+
+
+<body>
+
+    <button class="menu-button" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </button>
+    <!-- Popup Menu -->
+    <div class="popup-menu">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#work-experience">Work Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+    <!-- Hero Section -->
+    <div class="blur-background">
+        <div class="hero-section"></div>
+    </div>
+    <!-- Hero Text -->
+    <div class="hero-text">
+        <h1 id="intro"></h1>
+        <h2 id="name"></h2>
+    </div>
+    <!-- About Section -->
+    <section class="content-section" id="about">
+        <h2>About Me</h2>
+        <p>Hello! I’m Vedant Pandya, a passionate software developer and technology enthusiast based in Montreal. I’ve completed my Bachelor of Science in Computer Science at McGill University. With expertise in languages like Java, Python, and C++, I have developed a variety of projects, ranging from artificial intelligence applications to web development. I thrive on solving complex problems and creating innovative solutions that improve user experiences.</p>
+        <p>When I’m not coding, <br> you’ll find me exploring new tech trends, enjoying nature, trying new food, binge-watching TV shows, or goofing around with my adorable pet cats if I’m home. <strong>Fun fact</strong>: I have 3 cats, and they definitely keep me on my toes!</p>
+    </section>
+    <!-- Skills Section -->
+    <section class="skills-section" id="skills">
+        <h2>Skills</h2>
+        <div class="skill-wrapper">
+            <div class="skill" data-skill-level="5">
+                <span>Java</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="5">
+                <span>Python</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>JavaScript</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>React</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>HTML/CSS</span>
+                <div class="rating"></div>
+            </div>
+            <!-- Additional skills omitted for brevity -->
+	    <div class="skill" data-skill-level="4">
+                <span>SQL</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>AWS</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>React Native</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>PyTorch</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>TensorFlow</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>PostgreSQL</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>Docker</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>Git</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="4">
+                <span>MySQL</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>Bash</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>C</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>C++</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>MATLAB</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>R</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>OCaml</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>Clojure</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>Scikit</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>Flask</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>NLTK</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>Jupyter Notebook</span>
+                <div class="rating"></div>
+            </div>
+            <div class="skill" data-skill-level="3">
+                <span>SQLite</span>
+                <div class="rating"></div>
+        </div>
+    </section>
+
+<section class="content-section" id="projects">
+    <h2>Projects</h2>
+    <div class="project-wrapper">
+        
+        <!-- Traffic Surveillance with Facial and Vehicle Recognition Project -->
+        <div class="project">
+            <div class="d-flex justify-content-between">
+                <h3>Traffic Surveillance with Facial and Vehicle Recognition</h3>
+                <p><strong>Technologies:</strong> Python, OpenCV, Deep Learning</p>
+            </div>
+            <p>A system designed to monitor and analyze traffic by recognizing vehicles and individuals in real-time.</p>
+            <ul>
+                <li>Developed a surveillance system capable of identifying vehicles and individuals using computer vision techniques.</li>
+                <li>Implemented facial and vehicle recognition algorithms using Python, OpenCV, and deep learning frameworks.</li>
+                <li>Enhanced public safety measures by facilitating monitoring and tracking capabilities for traffic authorities.</li>
+            </ul>
+        </div>
+
+        <!-- Football World Cup Database System Project -->
+        <div class="project">
+            <div class="d-flex justify-content-between">
+                <h3>Football World Cup Database System</h3>
+                <p><strong>Technologies:</strong> MySQL, SQL, Database Management</p>
+            </div>
+            <p>Created a comprehensive database to store and manage data related to players, teams, and match statistics.</p>
+            <ul>
+                <li>Designed and implemented a relational database in MySQL to manage player profiles, teams, and match results.</li>
+                <li>Utilized SQL queries for efficient data retrieval, achieving complex queries for player and team statistics.</li>
+                <li>Created a user-friendly interface for users to interact with and retrieve data on past matches and player information.</li>
+            </ul>
+        </div>
+
+        <!-- Colosseum Survival Game Algorithm Project -->
+        <div class="project">
+            <div class="d-flex justify-content-between">
+                <h3>Colosseum Survival Game Algorithm</h3>
+                <p><strong>Technologies:</strong> Python, AI, Game Theory</p>
+            </div>
+            <p>Developed an AI algorithm for a strategic survival game set in a Colosseum.</p>
+            <ul>
+                <li>Developed a strategy-based algorithm in Python that simulates survival scenarios within a Colosseum environment.</li>
+                <li>Designed AI behavior to dynamically adapt to changing conditions and competitors in the game.</li>
+                <li>Utilized principles of game theory and reinforcement learning for AI decision-making processes.</li>
+            </ul>
+        </div>
+
+        <!-- Operating Systems Simulation Project -->
+        <div class="project">
+            <div class="d-flex justify-content-between">
+                <h3>Operating Systems Simulation</h3>
+                <p><strong>Technologies:</strong> C++, Operating Systems, Simulation</p>
+            </div>
+            <p>Simulated core operating system functionalities, including scheduling, memory management, and communication.</p>
+            <ul>
+                <li>Simulated essential OS components such as process scheduling, memory management, and inter-process communication in C++.</li>
+                <li>Created realistic scheduling algorithms to test process handling under varied system loads.</li>
+                <li>Enhanced understanding of OS concepts through hands-on development of scheduling, synchronization, and memory allocation processes.</li>
+            </ul>
+        </div>
+
+        <!-- Self-Balancing Pendulum Project -->
+        <div class="project">
+            <div class="d-flex justify-content-between">
+                <h3>Self-Balancing Pendulum</h3>
+                <p><strong>Technologies:</strong> Arduino, PID Control, Embedded Systems</p>
+            </div>
+            <p>Designed a self-balancing pendulum system using a PID controller for real-time angle adjustments.</p>
+            <ul>
+                <li>Designed and implemented a self-balancing pendulum system using a PID controller to maintain vertical stability.</li>
+                <li>Utilized sensors to detect pendulum angle and adjust motor responses in real-time.</li>
+                <li>Developed and tuned feedback mechanisms to achieve stable pendulum balance, overcoming external disturbances.</li>
+            </ul>
+        </div>
+
+        <!-- Pedometer using Arduino Project -->
+        <div class="project">
+            <div class="d-flex justify-content-between">
+                <h3>Pedometer using Arduino</h3>
+                <p><strong>Technologies:</strong> Arduino, Accelerometer, Embedded C</p>
+            </div>
+            <p>Implemented a pedometer using an Arduino and accelerometer to track step counts accurately.</p>
+            <ul>
+                <li>Built a wearable pedometer using an Arduino and an accelerometer to detect and count steps accurately.</li>
+                <li>Programmed the Arduino to process accelerometer data and filter noise for reliable step detection.</li>
+                <li>Displayed step counts on an LCD screen, with options to reset counts and monitor real-time step tracking.</li>
+            </ul>
+        </div>
+
+        <!-- Image-Based Plant Disease Detection System Project -->
+        <div class="project">
+            <div class="d-flex justify-content-between">
+                <h3>Image-Based Plant Disease Detection System</h3>
+                <p><strong>Technologies:</strong> TensorFlow, CNN, Image Processing</p>
+            </div>
+            <p>Developed a deep learning model to identify plant diseases from images with high accuracy.</p>
+            <ul>
+                <li>Developed a convolutional neural network (CNN) model using TensorFlow for image classification of plant diseases.</li>
+                <li>Processed a dataset of plant images to train the model, achieving high accuracy in disease identification.</li>
+                <li>Provided an interface for users to upload plant images and receive disease predictions for agricultural support.</li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="content-section" id="work-experience">
+    <h2>Work Experience</h2>
+    <div class="work-wrapper">
+
+        <!-- Sales Assistant Position -->
+        <div class="work">
+            <div class="d-flex justify-content-between">
+                <h3>Sales Assistant</h3>
+                <p>LeJames, McGill University Bookstore, Montreal, QC</p>
+            </div>
+            <div class="d-flex justify-content-end">
+                <p><strong>Duration:</strong> October 2021 - December 2023</p>
+            </div>
+            <ul>
+                <li>Contributed significantly to operational efficiency by clearing a backlog of purchase orders within the first month, demonstrating exceptional organizational and prioritization capabilities.</li>
+                <li>Facilitated smooth transaction flows and maintained strong relationships by managing communications with distributors and customers, ensuring timely and effective resolution of inquiries and issues.</li>
+                <li>Applied precise quoting techniques for institutional software and hardware, optimizing procurement strategies with a focus on cost efficiency and resource management.</li>
+            </ul>
+        </div>
+        
+        <!-- Academic Tutor Position -->
+        <div class="work">
+            <div class="d-flex justify-content-between">
+                <h3>Academic Tutor</h3>
+                <p>McGill University, Montreal, QC</p>
+            </div>
+            <div class="d-flex justify-content-end">
+                <p><strong>Duration:</strong> September 2020 - December 2021</p>
+            </div>
+            <ul>
+                <li>Assisted students in improving their understanding and performance in Mathematics, Physics, and Chemistry, utilizing tailored approaches to address individual learning needs.</li>
+                <li>Effectively communicated complex concepts, making them accessible and easy to understand for diverse groups of students.</li>
+                <li>Developed personalized study plans and strategies to improve student learning outcomes and academic success.</li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+
+
+<!-- Contact Info Section -->
+<!-- Contact Info Section with Icons -->
+
+
+<section class="content-section contact-section" id="contact">
+    <h2>Contact Information</h2>
+    <p><strong>Phone:</strong> <a href="tel:+14384933849">+1 (438) 4933-849 </a></p>
+    <p><strong>Email:</strong> <a href="mailto:vedant.pandya@outlook.com">vedant.pandya@outlook.com</a></p>
+    <div class="social-links">
+        <a href="https://www.linkedin.com/in/vedant-pandya-719250187/" target="_blank">
+            <i class="fab fa-linkedin"></i> LinkedIn
+        </a> |
+        <a href="https://github.com/vedantcpandya" target="_blank">
+            <i class="fab fa-github"></i> GitHub
+        </a>
+    </div>
+</section>
+
+<script>
+    // Typing effect for "Hey! I'm" and "Vedant Pandya"
+    const introText = "Hey! I'm ";
+    const nameText = "Vedant Pandya";
+    let index = 0, nameIndex = 0;
+
+    function typeText() {
+        if (index < introText.length) {
+            document.querySelector("#intro").innerHTML += introText.charAt(index);
+            index++;
+            setTimeout(typeText, 100);
+        } else if (nameIndex < nameText.length) {
+            document.querySelector("#name").innerHTML += nameText.charAt(nameIndex);
+            nameIndex++;
+            setTimeout(typeText, 100);
+        }
+    }
+
+    window.onload = typeText;
+
+    // Open and Close Menu Functions
+    function openMenu() {
+        document.body.classList.add("menu-open");
+    }
+
+    function closeMenu() {
+        document.body.classList.remove("menu-open");
+    }
+
+    // Toggle menu visibility on button click
+    document.querySelector(".menu-button").addEventListener("click", () => {
+        if (document.body.classList.contains("menu-open")) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+
+    // Close menu on pressing Escape key
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && document.body.classList.contains("menu-open")) {
+            closeMenu();
+        }
+    });
+
+    // Close menu after clicking a link
+    document.querySelectorAll(".popup-menu a").forEach(link => {
+        link.addEventListener("click", closeMenu);
+    });
+
+    // Skills dots display based on hover and skill level
+    document.addEventListener("DOMContentLoaded", () => {
+        const skills = document.querySelectorAll(".skill");
+
+        skills.forEach(skill => {
+            const skillLevel = skill.getAttribute("data-skill-level");
+            const ratingContainer = skill.querySelector(".rating");
+
+            // Create dots based on skill level
+            for (let i = 0; i < 5; i++) {
+                const dot = document.createElement("span");
+                dot.classList.add("dot");
+                if (i < skillLevel) {
+                    dot.classList.add("filled");  // Fill according to skill level
+                }
+                ratingContainer.appendChild(dot);
+            }
+        });
+    });
+
+    // Intersection Observer for fade-in effect
+    document.addEventListener("DOMContentLoaded", () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("fade-in");
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.content-section').forEach(section => observer.observe(section));
+    });
+</script>
+
+</body>
+</html>
